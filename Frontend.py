@@ -8,8 +8,10 @@ from typing import List, Dict, Any
 from langchain_core.runnables import RunnablePassthrough
 
 # --- PAGE CONFIG ---
-st.set_page_config(page_title="CorpBrain Agent", page_icon="🧠")
-st.title("🧠 CorpBrain: Talk to your Data")
+st.set_page_config(page_title="Fenil Patel | AI Portfolio", page_icon="👨‍💻")
+st.title("👨‍💻 Chat with Fenil's Resume")
+st.caption("This AI Agent has read my resume and can answer questions about my skills, experience, and goals.")
+
 
 # --- 1. SETUP THE BRAIN (Cached so it runs once) ---
 @st.cache_resource
@@ -48,7 +50,7 @@ def get_rag_chain():
         pinecone_api_key=PINECONE_API_KEY
     )
     
-    retriever = vectorstore.as_retriever(search_kwargs={"k": 2})
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 6})
 
     # --- CUSTOM CHAINS ---
     # (We paste the helper classes directly here to keep it self-contained)
@@ -106,8 +108,8 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-if prompt := st.chat_input("Ask a question about the uploaded document..."):
-    # User Message
+if prompt := st.chat_input("Ask: What is Fenil's experience with Python?"):
+
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
